@@ -75,6 +75,8 @@ namespace eLChicoQueDibujoEnLaPantallaTFTShield
             {
                 fifas = false;
                 selecio = -1;
+                dsa = false;
+                asd = false;
             }
             if (e.Key == OpenTK.Windowing.GraphicsLibraryFramework.Keys.E)
             {
