@@ -6,4 +6,4 @@ Este codigo esta unicamente hecho para pantallas tft-shield que usen las siguien
 <Adafruit_GFX.h>
 <MCUFRIEND_kbv.h>
    
-El como usar el programa croto esta el la consola abris el ejecutable
+El como usar el programa croto esta en la consola que aparece cuando abrís el ejecutable
