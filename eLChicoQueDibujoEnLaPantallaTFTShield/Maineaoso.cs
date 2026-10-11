@@ -219,75 +219,58 @@ namespace eLChicoQueDibujoEnLaPantallaTFTShield
                 if (manuel.Forma == "Rectangulo")
                 {
                     dibuha.AddRectFilled(manuel.posicioninicial, manuel.posicioninicial + manuel.tamano, ImGui.ColorConvertFloat4ToU32(manuel.color));
+
                     if (selecio == dibujo.IndexOf(manuel) + 1)
                     {
                         dibuha.AddRect(manuel.posicioninicial, manuel.posicioninicial + manuel.tamano, ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 1f, 1f, 1f)), 0f, ImDrawFlags.None, 3f);
                         dibuha.AddRectFilled(manuel.posicioninicial, manuel.posicioninicial + manuel.tamano, ImGui.ColorConvertFloat4ToU32(new Vector4(0.3f, 0.3f, 1f, 0.3f)));
-                        if(asd)
-                        {
-                            dibuha.AddRect(Debugeano2 - manuel.tamano / 2, Debugeano2 + manuel.tamano - manuel.tamano / 2, ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 1f, 1f, 1f)), 0f, ImDrawFlags.None, 3f);
-                        }
-                        if (dsa) 
-                        {
-                            dibuha.AddRect(manuel.posicioninicial, Debugeano, ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 1f, 1f, 1f)), 0f, ImDrawFlags.None, 3f);
-                        }
-                    }
-                }
-                else if (manuel.Forma == "Circulo")
-                {
-                    dibuha.AddCircleFilled(manuel.posicioninicial, manuel.tamano.X / 2, ImGui.ColorConvertFloat4ToU32(manuel.color));
-                }
 
-                if (frafoseado1 == 1)
-                {
-                    Vector2 mou = new Vector2(ImGui.GetMousePos().X, ImGui.GetMousePos().Y);
-                    if (selecio != -1) 
-                    {
-                        if (asd)
+                        if (frafoseado1 == 1)
                         {
-                            Debugeano2 = mou;
+                            Vector2 mou = new Vector2(ImGui.GetMousePos().X, ImGui.GetMousePos().Y);
+                            Vector2 pelotita = new Vector2(manuel.posicioninicial.X + manuel.tamano.X / 2, manuel.posicioninicial.Y + manuel.tamano.Y / 2);
+                            Vector2 pelotitaroja = new Vector2(manuel.posicioninicial.X + manuel.tamano.X, manuel.posicioninicial.Y + manuel.tamano.Y);
+
+                            dibuha.AddCircleFilled(pelotita, 12f, ImGui.ColorConvertFloat4ToU32(new Vector4(0, 1, 0, 1)));
+                            dibuha.AddCircleFilled(pelotitaroja, 8f, ImGui.ColorConvertFloat4ToU32(new Vector4(1, 0, 0, 1)));
+
                             if (ImGui.IsMouseClicked(ImGuiMouseButton.Left))
                             {
-                                dibujo[selecio - 1].posicioninicial = Debugeano2 - manuel.tamano / 2;
-                            }
-                        }
-                        else if (dsa) 
-                        {
-                            Debugeano = mou;
-                            if (ImGui.IsMouseClicked(ImGuiMouseButton.Left))
-                            {
-                                dibujo[selecio - 1].tamano = mou - dibujo[selecio - 1].posicioninicial;
-                                if (dibujo[selecio - 1].tamano.X <= 0) 
+                                if (mou.X > pelotita.X - 14f && mou.X < pelotita.X + 14 && mou.Y > pelotita.Y - 14 && mou.Y < pelotita.Y + 14)
                                 {
-                                    dibujo[selecio - 1].posicioninicial.X += dibujo[selecio - 1].tamano.X;
-                                    dibujo[selecio - 1].tamano.X = -dibujo[selecio - 1].tamano.X;
+                                    asd = !asd;
                                     dsa = false;
                                 }
-                                if (dibujo[selecio - 1].tamano.Y <= 0)
+                                else if (mou.X > pelotitaroja.X - 12f && mou.X < pelotitaroja.X + 12 && mou.Y > pelotitaroja.Y - 12 && mou.Y < pelotitaroja.Y + 12)
                                 {
-                                    dibujo[selecio - 1].posicioninicial.Y += dibujo[selecio - 1].tamano.Y;
-                                    dibujo[selecio - 1].tamano.Y = -dibujo[selecio - 1].tamano.Y;
+                                    dsa = !dsa;
+                                    asd = false;
+                                }
+                                else if (asd)
+                                {
+                                    asd = false;
+                                }
+                                else if (dsa)
+                                {
                                     dsa = false;
                                 }
                             }
-                        }
-                        dibuha.AddCircleFilled(new Vector2(dibujo[selecio - 1].posicioninicial.X + dibujo[selecio - 1].tamano.X / 2, dibujo[selecio - 1].posicioninicial.Y + dibujo[selecio - 1].tamano.Y / 2),12f, ImGui.ColorConvertFloat4ToU32(new Vector4(0, 1, 0, 1)));
-                        dibuha.AddCircleFilled(new Vector2(dibujo[selecio - 1].posicioninicial.X + dibujo[selecio - 1].tamano.X, dibujo[selecio - 1].posicioninicial.Y + dibujo[selecio - 1].tamano.Y), 8f, ImGui.ColorConvertFloat4ToU32(new Vector4(1, 0, 0, 1)));
-                        if (ImGui.IsMouseClicked(ImGuiMouseButton.Left))
-                        {
-                            Vector2 pelotita = new Vector2(dibujo[selecio - 1].posicioninicial.X + dibujo[selecio - 1].tamano.X / 2, dibujo[selecio - 1].posicioninicial.Y + dibujo[selecio - 1].tamano.Y / 2);
-                            Vector2 pelotitaroja = new Vector2(dibujo[selecio - 1].posicioninicial.X + dibujo[selecio - 1].tamano.X, dibujo[selecio - 1].posicioninicial.Y + dibujo[selecio - 1].tamano.Y);
-                            if (mou.X > pelotita.X - 12f && mou.X < pelotita.X + 12 && mou.Y > pelotita.Y - 12 && mou.Y < pelotita.Y + 12) 
-                            {
-                                //Console.WriteLine("negro de Springfield");
-                                asd = !asd;
-                            }else if (mou.X > pelotitaroja.X - 12f && mou.X < pelotitaroja.X + 12 && mou.Y > pelotitaroja.Y - 12 && mou.Y < pelotitaroja.Y + 12) 
-                            {
-                                //Console.WriteLine("blanco de Springfield");
-                                dsa = !dsa;
-                            }
 
-                        } 
+                            if (asd)
+                            {
+                                manuel.posicioninicial = mou - manuel.tamano / 2;
+                                dibuha.AddRect(manuel.posicioninicial, manuel.posicioninicial + manuel.tamano, ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 1f, 1f, 1f)), 0f, ImDrawFlags.None, 3f);
+                            }
+                            else if (dsa)
+                            {
+                                Vector2 nuevoTam = mou - manuel.posicioninicial;
+                                if (nuevoTam.X > 5f && nuevoTam.Y > 5f)
+                                {
+                                    manuel.tamano = nuevoTam;
+                                }
+                                dibuha.AddRect(manuel.posicioninicial, manuel.posicioninicial + manuel.tamano, ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 1f, 1f, 1f)), 0f, ImDrawFlags.None, 3f);
+                            }
+                        }
                     }
                 }
             }
@@ -303,36 +286,36 @@ namespace eLChicoQueDibujoEnLaPantallaTFTShield
                 ImGui.SetNextWindowPos(new System.Numerics.Vector2(50f, 50f));
                 ImGui.SetNextWindowSize(new System.Numerics.Vector2(300f, 800));
                 ImGui.Begin("Propiedades", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize);
-                var manuel = dibujo[selecio - 1];
-                if (manuel.Forma == "Rectangulo")
+                var manuel = dibujo;
+                if (manuel[selecio - 1].Forma == "Rectangulo")
                 {
                     ImGui.Spacing();
                     TextoCentrado("posicionIncial");
                     ImGui.Spacing();
                     ImGui.Separator();
-                    ImGui.SliderFloat("Posicion X", ref manuel.posicioninicial.X, 300, 1500);
-                    ImGui.SliderFloat("Posicion Y", ref manuel.posicioninicial.Y, 0, 1000);
+                    ImGui.SliderFloat("Posicion X", ref manuel[selecio - 1].posicioninicial.X, 300, 1500);
+                    ImGui.SliderFloat("Posicion Y", ref manuel[selecio - 1].posicioninicial.Y, 0, 1000);
                     ImGui.Separator();
                     ImGui.Spacing();
                     TextoCentrado("tamaño");
                     ImGui.Spacing();
                     ImGui.Separator();
-                    ImGui.SliderFloat("Posicion X##tamano", ref manuel.tamano.X, 0, 1000);
-                    ImGui.SliderFloat("Posicion Y##tamano", ref manuel.tamano.Y, 0, 1000);
+                    ImGui.SliderFloat("Posicion X##tamano", ref manuel[selecio - 1].tamano.X, 0, 1000);
+                    ImGui.SliderFloat("Posicion Y##tamano", ref manuel[selecio - 1].tamano.Y, 0, 1000);
                     ImGui.Separator();
                     ImGui.Spacing();
-                    ImGui.InputInt("capa", ref manuel.capa, -1000, 1000);
+                    ImGui.InputInt("capa", ref manuel[selecio - 1].capa, -1000, 1000);
                     ImGui.Spacing();
                     ImGui.Separator();
                     ImGui.Spacing();
-                    if (ImGui.ColorEdit4("Color", ref manuel.color, ImGuiColorEditFlags.NoAlpha)) 
+                    if (ImGui.ColorEdit4("Color", ref manuel[selecio - 1].color, ImGuiColorEditFlags.NoAlpha)) 
                     {
                         gapa = true;
                     }else 
                     {
                         gapa = false;
                     }
-                    dibujo[selecio - 1] = manuel;
+                    dibujo = manuel;
                 }
                 ImGui.End();
             }
@@ -370,6 +353,8 @@ namespace eLChicoQueDibujoEnLaPantallaTFTShield
             }
             if (frafoseado1 == 1)
             {
+                if ( !dsa && !asd)
+                { 
                 if (ImGui.IsMouseClicked(ImGuiMouseButton.Left) && !gapa)
                 {
                     foreach (var manuel in dibujo)
@@ -384,6 +369,7 @@ namespace eLChicoQueDibujoEnLaPantallaTFTShield
                         }
                     }
                 }
+            }
             }
             if (frafoseado1 == 4) 
             {
